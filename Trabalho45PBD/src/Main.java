@@ -16,7 +16,7 @@ public class Main {
         
         Controller c = new Controller();
         c.newUser();
-        c.arquivo();
+       
         c.Leitura();
         
     }
