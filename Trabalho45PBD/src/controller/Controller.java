@@ -78,7 +78,7 @@ public class Controller {
                 } else {
                     int atual = proximo;
                     do {
-                                                System.out.println("dsadsad"+proximo);
+                        System.out.println("dsadsad" + proximo);
 
                         atual = proximo;
                         arquivo.seek(((proximo) * 110) + 106);
@@ -111,6 +111,49 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void remover() {
+        try {
+            arquivo = new RandomAccessFile("data", "rw");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int cod = Integer.parseInt(JOptionPane.showInputDialog(" Insira o código : "));
+        int hash = cod % 28;
+        int codAtual = -1;
+        int linhaAtual = 0 ;
+        boolean acho =  false;
+        do {
+            try {
+                arquivo.seek(hash * 110);
+                linhaAtual = arquivo.readInt();
+                arquivo.seek(hash * 110 + 4);
+                
+                codAtual = arquivo.readInt();
+                if(codAtual == cod){
+                    acho = true;
+                    break;
+                }
+                arquivo.seek(hash * 110 + 106);
+                hash = arquivo.readInt();
+            } catch (IOException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } while ( hash != -1);
+        if(acho){
+            try {
+                arquivo.seek(linhaAtual * 110 + 4 );
+                  arquivo.writeInt(-1);
+            } catch (IOException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          
+            
+        }else{
+            JOptionPane.showMessageDialog(null, cod + " Não existe ");
+        }
     }
 
     public void arquivo() {

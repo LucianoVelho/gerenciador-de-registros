@@ -1,5 +1,6 @@
 
 import controller.Controller;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,13 +14,30 @@ import controller.Controller;
  */
 public class Main {
     public static void main(String[]args){
-        
         Controller c = new Controller();
-        //c.arquivo();
-        c.newUser();
-       
-        c.Leitura();
-        
-    }
+       int menu1 = Integer.parseInt(JOptionPane.showInputDialog("---MENU---\n\n"
+                + "1- Adicionar produto \n"
+                + "2- Listar \n"
+                + "3- Remover produto da lista \n"
+                + "4- Pesquisar"));
+    
+             switch(menu1){
+            case 1:
+               
+               c.newUser();
+               c.Leitura();
+                break;
+            case 2:
+                
+                c.Leitura();
+                break;
+            case 3:
+               c.remover();
+               c.Leitura();
+                break;
+            case 4:
+               
+                break;
+        }
     
 }
