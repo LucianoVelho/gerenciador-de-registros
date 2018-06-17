@@ -19,7 +19,8 @@ public class Main {
                 + "1- Adicionar produto \n"
                 + "2- Listar \n"
                 + "3- Remover produto da lista \n"
-                + "4- Pesquisar"));
+                + "4- Alterar \n"
+                + "5- Arquivo \n"));
     
              switch(menu1){
             case 1:
@@ -36,8 +37,13 @@ public class Main {
                c.Leitura();
                 break;
             case 4:
-               
+               c.alterar();
+               c.Leitura();
                 break;
+            case 5:
+                c.arquivo();
+                c.Leitura();
         }
     
+    }
 }

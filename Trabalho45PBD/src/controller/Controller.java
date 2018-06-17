@@ -122,16 +122,16 @@ public class Controller {
         int cod = Integer.parseInt(JOptionPane.showInputDialog(" Insira o código : "));
         int hash = cod % 28;
         int codAtual = -1;
-        int linhaAtual = 0 ;
-        boolean acho =  false;
+        int linhaAtual = 0;
+        boolean acho = false;
         do {
             try {
                 arquivo.seek(hash * 110);
                 linhaAtual = arquivo.readInt();
                 arquivo.seek(hash * 110 + 4);
-                
+
                 codAtual = arquivo.readInt();
-                if(codAtual == cod){
+                if (codAtual == cod) {
                     acho = true;
                     break;
                 }
@@ -141,17 +141,68 @@ public class Controller {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } while ( hash != -1);
-        if(acho){
+        } while (hash != -1);
+        if (acho) {
             try {
-                arquivo.seek(linhaAtual * 110 + 4 );
-                  arquivo.writeInt(-1);
+                arquivo.seek(linhaAtual * 110 + 4);
+                arquivo.writeInt(-1);
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
-          
-            
-        }else{
+
+        } else {
+            JOptionPane.showMessageDialog(null, cod + " Não existe ");
+        }
+    }
+
+    public void alterar() {
+        try {
+            arquivo = new RandomAccessFile("data", "rw");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int cod = Integer.parseInt(JOptionPane.showInputDialog(" Insira o código : "));
+        int hash = cod % 28;
+        int codAtual = -1;
+        int linhaAtual = 0;
+        boolean acho = false;
+        do {
+            try {
+                arquivo.seek(hash * 110);
+                linhaAtual = arquivo.readInt();
+                arquivo.seek(hash * 110 + 4);
+
+                codAtual = arquivo.readInt();
+                if (codAtual == cod) {
+                    acho = true;
+                    break;
+                }
+                arquivo.seek(hash * 110 + 106);
+                hash = arquivo.readInt();
+            } catch (IOException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } while (hash != -1);
+        if (acho) {
+
+            Usuario u = new Usuario();
+           
+            u.setNome(JOptionPane.showInputDialog("Digite o nome:"));
+            u.setQualificacao(JOptionPane.showInputDialog("Digite a qualificaçao:"));
+            u.setSalario(Double.parseDouble(JOptionPane.showInputDialog("Digite o salario:")));
+            try {
+                arquivo.seek(linhaAtual * 110 + 8);
+             
+                arquivo.writeChars(String.format("%1$30s", u.getNome()));
+                arquivo.writeChars(String.format("%1$15s", u.getQualificacao()));
+                arquivo.writeDouble(u.getSalario());
+                arquivo.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
             JOptionPane.showMessageDialog(null, cod + " Não existe ");
         }
     }
