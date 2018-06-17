@@ -20,7 +20,8 @@ public class Main {
                 + "2- Listar \n"
                 + "3- Remover produto da lista \n"
                 + "4- Alterar \n"
-                + "5- Arquivo \n"));
+                + "5- Arquivo \n"
+                + "6- Consultar"));
     
              switch(menu1){
             case 1:
@@ -43,6 +44,11 @@ public class Main {
             case 5:
                 c.arquivo();
                 c.Leitura();
+                break;
+            case 6:
+                c.consultar();
+                break;
+                
         }
     
     }
